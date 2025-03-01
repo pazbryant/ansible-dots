@@ -82,18 +82,17 @@ setup_ssh_keys() {
 }
 
 export_display() {
-	# NOTE: without this, firefox cannot create profiles. Check firefox role
-	# fore more details
+	# NOTE: without this, zen-browser cannot create profiles
 	export DISPLAY=":0"
 }
 
-create_firefox_profiles() {
-	if ! command -v firefox >/dev/null 2>&1; then
-		echo "Firefox is not installed. Skipping profile creation."
+create_zen_browser_profiles() {
+	if ! command -v zen-browser >/dev/null 2>&1; then
+		echo "Zen-browser is not installed. Skipping profile creation."
 		return
 	fi
-	firefox -CreateProfile Work
-	firefox -CreateProfile Personal
+	zen-browser -CreateProfile Work
+	zen-browser -CreateProfile Personal
 }
 
 get_media_from_usb() {
@@ -121,16 +120,13 @@ print_remaining_to_be_done() {
 	echo "Remaining tasks to be completed:"
 	echo "  - Setup RCLONE with MEGA"
 	echo "  - Set GTK theme using LXAppearance GUI"
-	echo "  - Log in to Firefox, Outlook, Bitwarden, GitHub, Google, Twitch"
+	echo "  - Log in to zen-browser, Outlook, Bitwarden, GitHub, Google, Twitch"
 	echo "  - Import and trust your private GPG key at $HOME/.gnupg/private_key.asc"
 }
 
 executing_custom_scripts() {
 	if [ -x "$HOME/bin/global/update-software" ]; then
 		"$HOME/bin/global/update-software"
-	fi
-	if [ -x "$HOME/bin/global/update-firefox-ui" ]; then
-		"$HOME/bin/global/update-firefox-ui"
 	fi
 }
 
@@ -147,7 +143,7 @@ setup_post_installation() {
 	pids="$pids $!"
 	get_media_from_usb &
 	pids="$pids $!"
-	create_firefox_profiles &
+	create_zen_browser_profiles &
 	pids="$pids $!"
 
 	for pid in $pids; do
@@ -178,7 +174,7 @@ get_user_compositor() {
 }
 
 export_display() {
-	# NOTE: without this, firefox cannot create profiles. Check firefox role
+	# NOTE: without this, zen-browser cannot create profiles. Check zen-browser role
 	# fore more details
 	export DISPLAY=":0"
 }
