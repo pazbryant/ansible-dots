@@ -6,17 +6,3 @@
 - name: "Run tasks for {{ host_os }}"
   ansible.builtin.include_tasks: "{{ host_os }}.yml"
   when: distribution_config.stat.exists
-
-- name: Install packages using cargo
-  community.general.cargo:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - fnm
-
-- name: Install packages with pipx
-  community.general.pipx:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - litecli
